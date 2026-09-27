@@ -1,0 +1,44 @@
+# Stable PD stand for Booster T2 (MuJoCo T2_31dof), joint order = T2_JOINT_NAMES
+# hip=-0.1, knee=0.2, ankle=-0.1 holds ~3s+ with kp=250
+height: 0.95
+kp: 250.0
+kd: 6.0
+place_feet_on_ground: true
+t2_default_joint_angles:
+  # head
+  - 0.0
+  - 0.0
+  # left arm
+  - 0.0
+  - 0.1
+  - -0.2
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  # right arm
+  - 0.0
+  - -0.1
+  - -0.2
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  # waist
+  - 0.0
+  - 0.0
+  - 0.0
+  # left leg
+  - -0.1
+  - 0.0
+  - 0.0
+  - 0.2
+  - -0.1
+  - 0.0
+  # right leg
+  - -0.1
+  - 0.0
+  - 0.0
+  - 0.2
+  - -0.1
+  - 0.0

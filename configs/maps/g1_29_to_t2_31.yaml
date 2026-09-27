@@ -1,0 +1,54 @@
+# Semantic map G1 (29) -> T2 (31).
+# status: exact | approx | drop
+# sign: multiply when packing T2->G1 and unpacking G1->T2
+# scale: extra scale on top of sign (usually 1.0)
+
+meta:
+  g1_dof: 29
+  t2_dof: 31
+  notes: >
+    Legs/waist are name-matched. Arms use approximate topology
+    (G1 shoulder_yaw -> T2 elbow_yaw; G1 elbow -> T2 elbow_pitch).
+    Head joints on T2 are held at 0 (no G1 counterpart).
+
+# Each entry maps one G1 joint to one T2 joint.
+entries:
+  # Left leg
+  - {g1: left_hip_pitch_joint,    t2: left_hip_pitch_joint,    sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_hip_roll_joint,     t2: left_hip_roll_joint,     sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_hip_yaw_joint,      t2: left_hip_yaw_joint,      sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_knee_joint,         t2: left_knee_pitch_joint,   sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_ankle_pitch_joint,  t2: left_ankle_pitch_joint,  sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_ankle_roll_joint,   t2: left_ankle_roll_joint,   sign: 1.0, scale: 1.0, status: exact}
+  # Right leg
+  - {g1: right_hip_pitch_joint,   t2: right_hip_pitch_joint,   sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_hip_roll_joint,    t2: right_hip_roll_joint,    sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_hip_yaw_joint,     t2: right_hip_yaw_joint,     sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_knee_joint,        t2: right_knee_pitch_joint,  sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_ankle_pitch_joint, t2: right_ankle_pitch_joint, sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_ankle_roll_joint,  t2: right_ankle_roll_joint,  sign: 1.0, scale: 1.0, status: exact}
+  # Waist
+  - {g1: waist_yaw_joint,         t2: waist_yaw_joint,         sign: 1.0, scale: 1.0, status: exact}
+  - {g1: waist_roll_joint,        t2: waist_roll_joint,        sign: 1.0, scale: 1.0, status: exact}
+  - {g1: waist_pitch_joint,       t2: waist_pitch_joint,       sign: 1.0, scale: 1.0, status: exact}
+  # Left arm (approx topology)
+  - {g1: left_shoulder_pitch_joint, t2: left_shoulder_pitch_joint, sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_shoulder_roll_joint,  t2: left_shoulder_roll_joint,  sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_shoulder_yaw_joint,   t2: left_elbow_yaw_joint,      sign: 1.0, scale: 1.0, status: approx}
+  - {g1: left_elbow_joint,          t2: left_elbow_pitch_joint,    sign: 1.0, scale: 1.0, status: approx}
+  - {g1: left_wrist_roll_joint,     t2: left_wrist_roll_joint,     sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_wrist_pitch_joint,    t2: left_wrist_pitch_joint,    sign: 1.0, scale: 1.0, status: exact}
+  - {g1: left_wrist_yaw_joint,      t2: left_wrist_yaw_joint,      sign: 1.0, scale: 1.0, status: exact}
+  # Right arm (approx topology)
+  - {g1: right_shoulder_pitch_joint, t2: right_shoulder_pitch_joint, sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_shoulder_roll_joint,  t2: right_shoulder_roll_joint,  sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_shoulder_yaw_joint,   t2: right_elbow_yaw_joint,      sign: 1.0, scale: 1.0, status: approx}
+  - {g1: right_elbow_joint,          t2: right_elbow_pitch_joint,    sign: 1.0, scale: 1.0, status: approx}
+  - {g1: right_wrist_roll_joint,     t2: right_wrist_roll_joint,     sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_wrist_pitch_joint,    t2: right_wrist_pitch_joint,    sign: 1.0, scale: 1.0, status: exact}
+  - {g1: right_wrist_yaw_joint,      t2: right_wrist_yaw_joint,      sign: 1.0, scale: 1.0, status: exact}
+
+# T2 joints with no G1 source — held at hold_value when unpacking.
+t2_hold:
+  - {t2: aa_head_yaw_joint, hold_value: 0.0, status: drop}
+  - {t2: head_pitch_joint,  hold_value: 0.0, status: drop}

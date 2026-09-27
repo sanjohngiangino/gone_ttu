@@ -1,0 +1,13 @@
+<mujoco model="soccer_ball">
+  <compiler angle="radian"/>
+  <default>
+    <geom friction="0.7 0.005 0.0001" solref="0.02 1" solimp="0.9 0.95 0.001"/>
+  </default>
+  <worldbody>
+    <body name="ball" pos="0 0 0.115">
+      <freejoint name="ball_free"/>
+      <geom name="ball_geom" type="sphere" size="0.115" mass="0.43"
+            rgba="1 1 1 1" friction="0.8 0.05 0.01" priority="1"/>
+    </body>
+  </worldbody>
+</mujoco>

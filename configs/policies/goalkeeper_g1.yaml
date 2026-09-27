@@ -1,0 +1,43 @@
+# Goalkeeper-compatible G1 policy observation / action layout
+num_actions: 29
+num_dofs: 29
+history_length: 10
+action_scale: 0.25
+ball_obs_dim: 3
+include_base_ang_vel: true
+include_projected_gravity: true
+
+# Default standing-ish pose from Humanoid-Goalkeeper g1_29_config (radians)
+g1_default_joint_angles:
+  - -0.1   # left_hip_pitch
+  - 0.2    # left_hip_roll
+  - 0.0    # left_hip_yaw
+  - 0.3    # left_knee
+  - -0.2   # left_ankle_pitch
+  - -0.2   # left_ankle_roll
+  - -0.1   # right_hip_pitch
+  - -0.2   # right_hip_roll
+  - 0.0    # right_hip_yaw
+  - 0.3    # right_knee
+  - -0.2   # right_ankle_pitch
+  - 0.2    # right_ankle_roll
+  - 0.0    # waist_yaw
+  - 0.0    # waist_roll
+  - 0.0    # waist_pitch
+  - 0.0    # left_shoulder_pitch
+  - 0.5    # left_shoulder_roll
+  - 0.0    # left_shoulder_yaw
+  - 1.2    # left_elbow
+  - 0.0    # left_wrist_roll
+  - 0.0    # left_wrist_pitch
+  - 0.0    # left_wrist_yaw
+  - 0.0    # right_shoulder_pitch
+  - -0.5   # right_shoulder_roll
+  - 0.0    # right_shoulder_yaw
+  - 1.2    # right_elbow
+  - 0.0    # right_wrist_roll
+  - 0.0    # right_wrist_pitch
+  - 0.0    # right_wrist_yaw
+
+# T2 defaults: filled by scripts/calibrate_signs.py or unpack of g1 defaults
+t2_default_joint_angles: []
