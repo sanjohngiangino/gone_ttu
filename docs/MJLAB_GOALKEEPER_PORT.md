@@ -13,7 +13,7 @@ SoccerLab ha portato kick/dribble. Noi portiamo **Humanoid Goalkeeper**
 | Path | Cosa fa |
 |------|---------|
 | `play.py` IsaacGym ufficiale | Portiere “vero” con il loro stack |
-| Nostro `view_side_by_side.py` | Smoke transfer — collassa (atteso) |
+| `scripts/factoryMjlab/run_retarget_gui.sh` | Retarget motion G1→T2 (seed map + arm IK) |
 | **Questo port mjlab** | Env Goalkeeper su MuJoCo-Warp API Isaac-like, train/play serio |
 
 I pesi `goalkeeper.pt` (IsaacGym) **non** si caricano zero-shot in mjlab.
@@ -131,7 +131,7 @@ AMP: `amp_coef=0.4`, obs dof×2, **region-conditioned** discriminators (6 region
 4. **AMP** motion buffer da `.pt` Goalkeeper + discriminator per regione
 5. **Train** smoke 50–100 iter su GPU
 6. **Play** checkpoint mjlab
-7. **Dopo**: stesso task su T2 / transfer (g1_to_t2)
+7. **Dopo**: stesso task su T2 / transfer — motion retarget già in `TRANSFER_G1_TO_T2.md`
 
 ---
 
@@ -154,4 +154,4 @@ python scripts/factoryMjlab/train.py SPQR-Mjlab-Goalkeeper-G1 --num_envs 64 --ma
 
 - Caricare `refs/goalkeeper.pt` Isaac in mjlab e aspettarsi parate
 - Port T2 prima che G1 mjlab stia in piedi sul task
-- Dipendere dal viewer MuJoCo grezzo di `g1_to_t2` per validare il portiere
+- Usare solo il remapper policy zero-shot per validare il portiere (serve train mjlab)

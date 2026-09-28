@@ -41,12 +41,14 @@ Cosa prende SPQR:
 
 | Componente paper | Uso SPQR |
 |------------------|----------|
-| Video → GVHMR → retarget G1 | Stesso pipeline, retarget su T2 |
+| Video → GVHMR → retarget G1 | Stesso pipeline; **retarget G1→T2** in-repo (`arm_ik` + map) |
 | Position-conditioned AMP | Prior diversi per regione di arrivo palla |
 | PPO single-stage | Stesso |
 | Task reward su EE vs landing | **Adattato: piedi invece di mani** |
 | Critic privilegiato (palla, regione, EE) | Critic con **piede sx / dx** |
 | Post-task stability | Tenere |
+
+Viewer retarget: `scripts/factoryMjlab/run_retarget_gui.sh` — vedi `TRANSFER_G1_TO_T2.md` / `README.md`.
 
 Cosa **non** prendere as-is:
 
