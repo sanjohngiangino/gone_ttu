@@ -1,4 +1,5 @@
 .venv/
+.venv-mjlab/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -8,6 +9,9 @@ build/
 .DS_Store
 *.egg-info/
 refs/smoke_log.csv
+refs/motion_previews/
+refs/*.mp4
+logs/
 .cursor/
 agent-tools/
 uploads/

@@ -19,6 +19,9 @@ class MapEntry:
     sign: float
     scale: float
     status: str
+    # Applied only on G1→T2 unpack: q_t2 = sign*scale*q_g1 + offset
+    # Inverse on pack: q_g1 = (q_t2 - offset) / (sign*scale)
+    offset: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -49,6 +52,7 @@ class JointAdapter:
         self._g1_idx = np.array([self.g1_index[e.g1] for e in entries], dtype=np.int64)
         self._t2_idx = np.array([self.t2_index[e.t2] for e in entries], dtype=np.int64)
         self._factors = np.array([e.sign * e.scale for e in entries], dtype=np.float64)
+        self._offsets = np.array([e.offset for e in entries], dtype=np.float64)
         self._hold_t2_idx = np.array([self.t2_index[h.t2] for h in holds], dtype=np.int64)
         self._hold_vals = np.array([h.hold_value for h in holds], dtype=np.float64)
 
@@ -62,6 +66,7 @@ class JointAdapter:
                 sign=float(e.get("sign", 1.0)),
                 scale=float(e.get("scale", 1.0)),
                 status=str(e.get("status", "exact")),
+                offset=float(e.get("offset", 0.0)),
             )
             for e in data["entries"]
         ]
@@ -119,7 +124,8 @@ class JointAdapter:
         if q_t2.shape[-1] != self.t2_dof:
             raise ValueError(f"Expected last dim {self.t2_dof}, got {q_t2.shape}")
         out = np.zeros(q_t2.shape[:-1] + (self.g1_dof,), dtype=np.float64)
-        vals = q_t2[..., self._t2_idx] * self._factors
+        # Inverse of unpack: (q_t2 - offset) / factor
+        vals = (q_t2[..., self._t2_idx] - self._offsets) / self._factors
         out[..., self._g1_idx] = vals
         return out
 
@@ -129,7 +135,7 @@ class JointAdapter:
         if q_g1.shape[-1] != self.g1_dof:
             raise ValueError(f"Expected last dim {self.g1_dof}, got {q_g1.shape}")
         out = np.zeros(q_g1.shape[:-1] + (self.t2_dof,), dtype=np.float64)
-        vals = q_g1[..., self._g1_idx] * self._factors
+        vals = q_g1[..., self._g1_idx] * self._factors + self._offsets
         out[..., self._t2_idx] = vals
         if self._hold_t2_idx.size:
             out[..., self._hold_t2_idx] = self._hold_vals

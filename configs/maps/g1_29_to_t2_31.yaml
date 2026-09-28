@@ -7,11 +7,15 @@ meta:
   g1_dof: 29
   t2_dof: 31
   notes: >
-    Legs/waist are name-matched. Arms use approximate topology
-    (G1 shoulder_yaw -> T2 elbow_yaw; G1 elbow -> T2 elbow_pitch).
-    Head joints on T2 are held at 0 (no G1 counterpart).
+    Legs/waist name-matched. Arms differ in chain order:
+    G1 pitch→roll→yaw→elbow; T2 pitch→roll→elbow_pitch→elbow_yaw.
+    With T2 hanging arms (roll≈±1.3), visual elbow crease is elbow_yaw.
+    Map: G1 elbow→T2 elbow_yaw; G1 shoulder_yaw→T2 elbow_pitch.
+    Shoulder roll hang offsets L=-1.3 / R=+1.3; elbow→yaw sign=-1.
+    Viewer applies ArmIKRetargeter on top for wrist direction + crease.
 
 # Each entry maps one G1 joint to one T2 joint.
+# q_t2 = sign * scale * q_g1 + offset
 entries:
   # Left leg
   - {g1: left_hip_pitch_joint,    t2: left_hip_pitch_joint,    sign: 1.0, scale: 1.0, status: exact}
@@ -31,22 +35,22 @@ entries:
   - {g1: waist_yaw_joint,         t2: waist_yaw_joint,         sign: 1.0, scale: 1.0, status: exact}
   - {g1: waist_roll_joint,        t2: waist_roll_joint,        sign: 1.0, scale: 1.0, status: exact}
   - {g1: waist_pitch_joint,       t2: waist_pitch_joint,       sign: 1.0, scale: 1.0, status: exact}
-  # Left arm (approx topology)
-  - {g1: left_shoulder_pitch_joint, t2: left_shoulder_pitch_joint, sign: 1.0, scale: 1.0, status: exact}
-  - {g1: left_shoulder_roll_joint,  t2: left_shoulder_roll_joint,  sign: 1.0, scale: 1.0, status: exact}
-  - {g1: left_shoulder_yaw_joint,   t2: left_elbow_yaw_joint,      sign: 1.0, scale: 1.0, status: approx}
-  - {g1: left_elbow_joint,          t2: left_elbow_pitch_joint,    sign: 1.0, scale: 1.0, status: approx}
-  - {g1: left_wrist_roll_joint,     t2: left_wrist_roll_joint,     sign: 1.0, scale: 1.0, status: exact}
-  - {g1: left_wrist_pitch_joint,    t2: left_wrist_pitch_joint,    sign: 1.0, scale: 1.0, status: exact}
-  - {g1: left_wrist_yaw_joint,      t2: left_wrist_yaw_joint,      sign: 1.0, scale: 1.0, status: exact}
-  # Right arm (approx topology)
-  - {g1: right_shoulder_pitch_joint, t2: right_shoulder_pitch_joint, sign: 1.0, scale: 1.0, status: exact}
-  - {g1: right_shoulder_roll_joint,  t2: right_shoulder_roll_joint,  sign: 1.0, scale: 1.0, status: exact}
-  - {g1: right_shoulder_yaw_joint,   t2: right_elbow_yaw_joint,      sign: 1.0, scale: 1.0, status: approx}
-  - {g1: right_elbow_joint,          t2: right_elbow_pitch_joint,    sign: 1.0, scale: 1.0, status: approx}
-  - {g1: right_wrist_roll_joint,     t2: right_wrist_roll_joint,     sign: 1.0, scale: 1.0, status: exact}
-  - {g1: right_wrist_pitch_joint,    t2: right_wrist_pitch_joint,    sign: 1.0, scale: 1.0, status: exact}
-  - {g1: right_wrist_yaw_joint,      t2: right_wrist_yaw_joint,      sign: 1.0, scale: 1.0, status: exact}
+  # Left arm — crease is T2 elbow_yaw when hanging (not elbow_pitch)
+  - {g1: left_shoulder_pitch_joint, t2: left_shoulder_pitch_joint, sign: 1.0, scale: 1.0, offset: 0.0, status: exact}
+  - {g1: left_shoulder_roll_joint,  t2: left_shoulder_roll_joint,  sign: 1.0, scale: 1.0, offset: -1.30, status: approx}
+  - {g1: left_shoulder_yaw_joint,   t2: left_elbow_pitch_joint,    sign: -1.0, scale: 1.0, offset: 0.0, status: approx}
+  - {g1: left_elbow_joint,          t2: left_elbow_yaw_joint,      sign: -1.0, scale: 1.0, offset: 0.0, status: approx}
+  - {g1: left_wrist_roll_joint,     t2: left_wrist_roll_joint,     sign: 1.0, scale: 1.0, offset: 0.0, status: exact}
+  - {g1: left_wrist_pitch_joint,    t2: left_wrist_pitch_joint,    sign: 1.0, scale: 1.0, offset: 0.0, status: exact}
+  - {g1: left_wrist_yaw_joint,      t2: left_wrist_yaw_joint,      sign: 1.0, scale: 1.0, offset: 0.0, status: exact}
+  # Right arm — same crease mapping
+  - {g1: right_shoulder_pitch_joint, t2: right_shoulder_pitch_joint, sign: 1.0, scale: 1.0, offset: 0.0, status: exact}
+  - {g1: right_shoulder_roll_joint,  t2: right_shoulder_roll_joint,  sign: 1.0, scale: 1.0, offset: 1.30, status: approx}
+  - {g1: right_shoulder_yaw_joint,   t2: right_elbow_pitch_joint,    sign: -1.0, scale: 1.0, offset: 0.0, status: approx}
+  - {g1: right_elbow_joint,          t2: right_elbow_yaw_joint,      sign: -1.0, scale: 1.0, offset: 0.0, status: approx}
+  - {g1: right_wrist_roll_joint,     t2: right_wrist_roll_joint,     sign: 1.0, scale: 1.0, offset: 0.0, status: exact}
+  - {g1: right_wrist_pitch_joint,    t2: right_wrist_pitch_joint,    sign: 1.0, scale: 1.0, offset: 0.0, status: exact}
+  - {g1: right_wrist_yaw_joint,      t2: right_wrist_yaw_joint,      sign: 1.0, scale: 1.0, offset: 0.0, status: exact}
 
 # T2 joints with no G1 source — held at hold_value when unpacking.
 t2_hold:
